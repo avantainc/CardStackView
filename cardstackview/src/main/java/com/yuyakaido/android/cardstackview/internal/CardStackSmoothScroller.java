@@ -1,9 +1,11 @@
 package com.yuyakaido.android.cardstackview.internal;
 
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
+import com.yuyakaido.android.cardstackview.R;
 import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
 
 import androidx.annotation.NonNull;
@@ -130,6 +132,15 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
             case AutomaticRewind:
                 listener.onCardRewound();
                 listener.onCardAppeared(manager.getTopView(), manager.getTopPosition());
+
+                View rewindOverlay = manager.getTopView().findViewById(R.id.rewind_overlay);
+                if (rewindOverlay != null) {
+                    rewindOverlay.animate()
+                            .alpha(0.0f)
+                            .setDuration(1000)
+                            .setInterpolator(new DecelerateInterpolator())
+                            .start();
+                }
                 break;
             case ManualSwipe:
                 // Notify callback from CardStackLayoutManager

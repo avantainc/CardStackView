@@ -467,6 +467,13 @@ public class CardStackLayoutManager
     }
 
     private void updateOverlay(View view) {
+        if (state.status == CardStackState.Status.RewindAnimating) {
+            View rewindOverlay = view.findViewById(R.id.rewind_overlay);
+            if (rewindOverlay != null) {
+                rewindOverlay.setAlpha(1.0f);
+                return;
+            }
+        }
 
         View leftOverlay = view.findViewById(R.id.left_overlay);
         if (leftOverlay != null) {
@@ -526,6 +533,10 @@ public class CardStackLayoutManager
         View bottomOverlay = view.findViewById(R.id.bottom_overlay);
         if (bottomOverlay != null) {
             bottomOverlay.setAlpha(0.0f);
+        }
+        View rewindOverlay = view.findViewById(R.id.rewind_overlay);
+        if (rewindOverlay != null) {
+            rewindOverlay.setAlpha(0.0f);
         }
     }
 
