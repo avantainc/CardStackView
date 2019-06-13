@@ -1,8 +1,8 @@
 package com.yuyakaido.android.cardstackview.internal;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.yuyakaido.android.cardstackview.Direction;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CardStackState {
     public Status status = Status.Idle;
@@ -17,7 +17,8 @@ public class CardStackState {
     public enum Status {
         Idle,
         Dragging,
-        RewindAnimating,
+        AutomaticRewindAnimating,
+        CancelRewindAnimating,
         AutomaticSwipeAnimating,
         AutomaticSwipeAnimated,
         ManualSwipeAnimating,

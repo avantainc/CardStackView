@@ -88,7 +88,8 @@ public class CardStackLayoutManager
                     return dx;
                 }
                 break;
-            case RewindAnimating:
+            case CancelRewindAnimating:
+            case AutomaticRewindAnimating:
                 state.dx -= dx;
                 update(recycler);
                 return dx;
@@ -136,7 +137,8 @@ public class CardStackLayoutManager
                     return dy;
                 }
                 break;
-            case RewindAnimating:
+            case CancelRewindAnimating:
+            case AutomaticRewindAnimating:
                 state.dy -= dy;
                 update(recycler);
                 return dy;
@@ -467,14 +469,6 @@ public class CardStackLayoutManager
     }
 
     private void updateOverlay(View view) {
-        if (state.status == CardStackState.Status.RewindAnimating) {
-            View rewindOverlay = view.findViewById(R.id.rewind_overlay);
-            if (rewindOverlay != null) {
-                rewindOverlay.setAlpha(1.0f);
-                return;
-            }
-        }
-
         View leftOverlay = view.findViewById(R.id.left_overlay);
         if (leftOverlay != null) {
             leftOverlay.setAlpha(0.0f);
@@ -491,6 +485,15 @@ public class CardStackLayoutManager
         if (bottomOverlay != null) {
             bottomOverlay.setAlpha(0.0f);
         }
+
+        if (state.status == CardStackState.Status.AutomaticRewindAnimating) {
+            View rewindOverlay = view.findViewById(R.id.rewind_overlay);
+            if (rewindOverlay != null) {
+                rewindOverlay.setAlpha(1.0f);
+            }
+            return;
+        }
+
         Direction direction = state.getDirection();
         float alpha = setting.overlayInterpolator.getInterpolation(state.getRatio());
         switch (direction) {

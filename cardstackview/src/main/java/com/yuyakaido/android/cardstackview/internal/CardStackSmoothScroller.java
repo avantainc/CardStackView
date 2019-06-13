@@ -110,14 +110,14 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 listener.onCardDisappeared(manager.getTopView(), manager.getTopPosition());
                 break;
             case AutomaticRewind:
-                state.next(CardStackState.Status.RewindAnimating);
+                state.next(CardStackState.Status.AutomaticRewindAnimating);
                 break;
             case ManualSwipe:
                 state.next(CardStackState.Status.ManualSwipeAnimating);
                 listener.onCardDisappeared(manager.getTopView(), manager.getTopPosition());
                 break;
             case ManualCancel:
-                state.next(CardStackState.Status.RewindAnimating);
+                state.next(CardStackState.Status.CancelRewindAnimating);
                 break;
         }
     }
@@ -125,6 +125,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
     @Override
     protected void onStop() {
         CardStackListener listener = manager.getCardStackListener();
+        View rewindOverlay = manager.getTopView().findViewById(R.id.rewind_overlay);
         switch (type) {
             case AutomaticSwipe:
                 // Notify callback from CardStackLayoutManager
@@ -133,11 +134,11 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 listener.onCardRewound();
                 listener.onCardAppeared(manager.getTopView(), manager.getTopPosition());
 
-                View rewindOverlay = manager.getTopView().findViewById(R.id.rewind_overlay);
                 if (rewindOverlay != null) {
                     rewindOverlay.animate()
+                            .setStartDelay(500)
                             .alpha(0.0f)
-                            .setDuration(1000)
+                            .setDuration(500)
                             .setInterpolator(new DecelerateInterpolator())
                             .start();
                 }
