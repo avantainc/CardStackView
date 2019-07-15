@@ -1,9 +1,9 @@
 package com.yuyakaido.android.cardstackview.internal;
 
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 
 public class CardStackDataObserver extends RecyclerView.AdapterDataObserver {
 
@@ -15,8 +15,13 @@ public class CardStackDataObserver extends RecyclerView.AdapterDataObserver {
 
     @Override
     public void onChanged() {
-        CardStackLayoutManager manager = getCardStackLayoutManager();
-        manager.setTopPosition(0);
+        if (recyclerView.getAdapter() != null && recyclerView.getAdapter().getItemCount() > 0) {
+            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+            int topPosition = getCardStackLayoutManager().getTopPosition();
+            if (topPosition > adapter.getItemCount() - 1) {
+                getCardStackLayoutManager().setTopPosition(adapter.getItemCount() - 1);
+            }
+        }
     }
 
     @Override
