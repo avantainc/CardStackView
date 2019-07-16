@@ -2,14 +2,14 @@ package com.yuyakaido.android.cardstackview.internal;
 
 import android.view.View;
 
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.Duration;
+import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
-import com.yuyakaido.android.cardstackview.Duration;
-import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 public class CardStackSnapHelper extends SnapHelper {
 
@@ -32,8 +32,9 @@ public class CardStackSnapHelper extends SnapHelper {
                     float horizontal = Math.abs(x) / (float) targetView.getWidth();
                     float vertical = Math.abs(y) / (float) targetView.getHeight();
                     Duration duration = Duration.fromVelocity(velocityY < velocityX ? velocityX : velocityY);
-                    if (duration == Duration.Fast || setting.swipeThreshold < horizontal || setting.swipeThreshold < vertical) {
-                        CardStackState state = manager.getCardStackState();
+                    CardStackState state = manager.getCardStackState();
+                    if ((duration == Duration.Fast || setting.swipeThreshold < horizontal || setting.swipeThreshold < vertical) &&
+                            manager.getCardStackListener().onCardPreSwiped(state.getDirection())) {
                         if (setting.directions.contains(state.getDirection())) {
                             state.targetPosition = state.topPosition + 1;
 

@@ -21,6 +21,8 @@ public class CardStackDataObserver extends RecyclerView.AdapterDataObserver {
             if (topPosition > adapter.getItemCount() - 1) {
                 getCardStackLayoutManager().setTopPosition(adapter.getItemCount() - 1);
             }
+        } else {
+            getCardStackLayoutManager().setTopPosition(0);
         }
     }
 
