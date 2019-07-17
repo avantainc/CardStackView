@@ -125,7 +125,6 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
     @Override
     protected void onStop() {
         CardStackListener listener = manager.getCardStackListener();
-        View rewindOverlay = manager.getTopView().findViewById(R.id.rewind_overlay);
         switch (type) {
             case AutomaticSwipe:
                 // Notify callback from CardStackLayoutManager
@@ -134,6 +133,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 listener.onCardRewound();
                 listener.onCardAppeared(manager.getTopView(), manager.getTopPosition());
 
+                View rewindOverlay = manager.getTopView().findViewById(R.id.rewind_overlay);
                 if (rewindOverlay != null) {
                     rewindOverlay.animate()
                             .setStartDelay(500)
