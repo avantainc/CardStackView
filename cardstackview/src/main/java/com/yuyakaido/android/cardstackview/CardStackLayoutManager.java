@@ -218,7 +218,7 @@ public class CardStackLayoutManager
 
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State s, int position) {
-        if (setting.swipeableMethod.canSwipeAutomatically()) {
+        if (setting.swipeableMethod.canSwipeAutomatically() && listener.onCardPreSwiped(setting.swipeAnimationSetting.getDirection())) {
             if (state.canScrollToPosition(position, getItemCount())) {
                 smoothScrollToPosition(position);
             }

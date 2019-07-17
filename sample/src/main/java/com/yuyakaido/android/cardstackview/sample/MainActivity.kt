@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     }
 
     override fun onCardPreSwiped(direction: Direction?): Boolean {
+        Log.d("logi", "onCardPreSwiped : ")
         return false
     }
 
